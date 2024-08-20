@@ -19,8 +19,8 @@ def add_text_to_image(image, text, position, font_scale, color, thickness):
 
 def main():
     parser = argparse.ArgumentParser(description="Программа для обработки двух файлов.")
-    parser.add_argument('pt', type=str, help='path yolov8-seg.pt')
     parser.add_argument('mp4', type=str, help='path to file .mp4')
+    parser.add_argument('pt', type=str, help='path yolov8-seg.pt')
     parser.add_argument('conf', type=str, help='conf model float 0.4')
     args = parser.parse_args()
 
