@@ -51,7 +51,7 @@ std::vector<cv::Scalar> generateColors(AutoBackendOnnx& model) {
 
 void processFrame(cv::Mat& prevFrame, cv::Mat& currentFrame, AutoBackendOnnx& model, const std::vector<cv::Scalar>& colors,
     std::unordered_map<int, std::string>& names, float conf_threshold, float iou_threshold, float mask_threshold,
-    int conversion_code, cv::VideoWriter& outputVideo, double scaleFactor) {
+    int conversion_code, cv::VideoWriter& outputVideo, double scaleFactor, bool b_gtx) {
 
     cv::Mat bboxFrame = currentFrame.clone();
     std::vector<YoloResults> results = model.predict_once(currentFrame, conf_threshold, iou_threshold, mask_threshold, conversion_code);
@@ -200,7 +200,7 @@ int main(int argc, char* argv[]) {
             break;
         }
 
-        processFrame(prevFrame, currentFrame, model, colors, names, conf_threshold, iou_threshold, mask_threshold, conversion_code, outputVideo, scaleFactor);
+        processFrame(prevFrame, currentFrame, model, colors, names, conf_threshold, iou_threshold, mask_threshold, conversion_code, outputVideo, scaleFactor,b_gtx);
 
         prevFrame = currentFrame.clone();
 
