@@ -159,23 +159,26 @@ void processFrame(cv::Mat& prevFrame, cv::Mat& currentFrame, AutoBackendOnnx& mo
     cv::vconcat(images, combinedVertical);
 
     outputVideo.write(combinedVertical);
+
     cv::imshow("Combined View", combinedVertical);
 }
 
 int main(int argc, char* argv[]) {
     initializeOpenCV();
-    if (argc < 3) {
-        std::cerr << "Usage: program <video_path> <model_path>" << std::endl;
+    if (argc < 5) {
+        std::cerr << "Usage: program <video_path> <model_path> <conf> <boolean gtx>" << std::endl;
         return -1;
     }
 
     std::string video_path = argv[1];
     const std::string& modelPath = argv[2];
+    float conf_threshold = std::stof(argv[3]);  // Преобразование строки в float
+    bool b_gtx = std::stoi(argv[4]);  // Преобразование строки в int и конвертация в bool
 
     const std::string& onnx_provider = OnnxProviders::CUDA;
     const std::string& onnx_logid = "yolov8_inference2";
     float mask_threshold = 0.5f;
-    float conf_threshold = 0.30f;
+
     float iou_threshold = 0.45f;
     int conversion_code = cv::COLOR_BGR2RGB;
     double scaleFactor = 0.5;
@@ -200,14 +203,15 @@ int main(int argc, char* argv[]) {
 
         prevFrame = currentFrame.clone();
 
-        if (cv::waitKey(1) == 'q') {
+        if (b_gtx && cv::waitKey(1) == 'q') {
             break;
         }
     }
 
     cap.release();
     outputVideo.release();
-    cv::destroyAllWindows();
-
+    if (b_gtx && cv::waitKey(1) == 'q') {
+            cv::destroyAllWindows();
+     }
     return 0;
 }
