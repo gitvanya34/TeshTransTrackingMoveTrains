@@ -159,8 +159,9 @@ void processFrame(cv::Mat& prevFrame, cv::Mat& currentFrame, AutoBackendOnnx& mo
     cv::vconcat(images, combinedVertical);
 
     outputVideo.write(combinedVertical);
-
-    cv::imshow("Combined View", combinedVertical);
+    if (b_gtx) {
+        cv::imshow("Combined View", combinedVertical);
+    }
 }
 
 int main(int argc, char* argv[]) {
