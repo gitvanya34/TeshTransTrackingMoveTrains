@@ -180,7 +180,6 @@ int main(int argc, char* argv[]) {
     cout<<"modelPath: "<<modelPath<<endl;
     cout<<"b_gtx: "<<b_gtx<<endl;
     cout<<"conf_threshold: "<<conf_threshold<<endl;
-    cout<<"b_gtx: "<<b_gtx<<endl;
 
     const std::string& onnx_provider = OnnxProviders::CUDA;
     const std::string& onnx_logid = "yolov8_inference2";
