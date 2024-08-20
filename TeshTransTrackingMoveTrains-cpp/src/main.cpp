@@ -203,14 +203,14 @@ int main(int argc, char* argv[]) {
 
         prevFrame = currentFrame.clone();
 
-        if (b_gtx && cv::waitKey(1) == 'q') {
-            break;
-        }
+//        if (b_gtx && cv::waitKey(1) == 'q') {
+//            break;
+//        }
     }
 
     cap.release();
     outputVideo.release();
-    if (b_gtx && cv::waitKey(1) == 'q') {
+    if (b_gtx) {
             cv::destroyAllWindows();
      }
     return 0;
