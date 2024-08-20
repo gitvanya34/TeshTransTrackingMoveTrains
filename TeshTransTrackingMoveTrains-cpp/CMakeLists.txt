@@ -1,63 +1,53 @@
-﻿CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+﻿cmake_minimum_required(VERSION 3.0.0)
 project(TeshTransTestingTaskCPP)
 
-SET (OpenCV_DIR "C:\\opencv\\build\\x64\\vc16\\lib")  # opencv lib root
-SET (OpenCV_BIN_DIR "C:\\opencv\\build\\x64\\vc16\\bin")  #opencv bin root
-
-SET (OpenCV_DEBUG_DLL_FILENAME opencv_world480d.dll)  # change filenames
-SET (OpenCV_RELEASE_DLL_FILENAME opencv_world480.dll)  # change filenames
-
-SET (ONNXRUNTIME_DIR "C:\\onnxruntime-win-x64-1.19.0")  # onnxruntime root
-
-FIND_PACKAGE(OpenCV REQUIRED)
-
-# --- Configure your project files ---
-include_directories(include)  # Include your header files directory
-# Recursively collect all source files under 'src' directory
-file(GLOB_RECURSE CURR_SOURCES src/*.cpp)
-
-# Create the executable
-add_executable(YOLOv8CPP ${CURR_SOURCES})
-
-SET(CMAKE_CXX_STANDARD 17)
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-TARGET_INCLUDE_DIRECTORIES(YOLOv8CPP PRIVATE "${ONNXRUNTIME_DIR}/include")
-
-target_compile_features(YOLOv8CPP PRIVATE cxx_std_17)
-
-TARGET_LINK_LIBRARIES(YOLOv8CPP ${OpenCV_LIBS})
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (WIN32)
-    TARGET_LINK_LIBRARIES(YOLOv8CPP "${ONNXRUNTIME_DIR}/lib/onnxruntime.lib")
+    set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib")
+    set(OpenCV_BIN_DIR "C:/opencv/build/x64/vc16/bin")
 
-    # some changes to the original version:
-    #   copy onnxruntime dll
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${ONNXRUNTIME_DIR}/lib/onnxruntime.dll"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
-            )
-    #   copy opencv
-#[[    add_custom_command(TARGET YOLOv8CPP POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${OpenCV_DIR}/${OpenCV_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
-            )]]
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${OpenCV_BIN_DIR}/${OpenCV_DEBUG_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
-            )
-    # add release
-    add_custom_command(TARGET YOLOv8CPP POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${OpenCV_BIN_DIR}/${OpenCV_RELEASE_DLL_FILENAME}"
-            "$<TARGET_FILE_DIR:YOLOv8CPP>"
-            )
+    set(OpenCV_DEBUG_DLL_FILENAME opencv_world480d.dll)
+    set(OpenCV_RELEASE_DLL_FILENAME opencv_world480.dll)
 
-endif(WIN32)
+    set(ONNXRUNTIME_DIR "C:/onnxruntime-win-x64-1.19.0")
+else()
+    set(OpenCV_DIR "/usr/lib/x86_64-linux-gnu/cmake/opencv4")
+    set(ONNXRUNTIME_DIR "/onnxruntime")
+endif()
+
+find_package(OpenCV REQUIRED)
+
+include_directories(include)
+
+file(GLOB_RECURSE CURR_SOURCES src/*.cpp)
+
+add_executable(TeshTransTestingTaskCPP ${CURR_SOURCES})
+
+target_include_directories(TeshTransTestingTaskCPP PRIVATE "${ONNXRUNTIME_DIR}/include")
+
+target_link_libraries(TeshTransTestingTaskCPP ${OpenCV_LIBS})
+
+if (WIN32)
+    target_link_libraries(TeshTransTestingTaskCPP "${ONNXRUNTIME_DIR}/lib/onnxruntime.lib")
+
+    add_custom_command(TARGET TeshTransTestingTaskCPP POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${ONNXRUNTIME_DIR}/lib/onnxruntime.dll"
+        "$<TARGET_FILE_DIR:TeshTransTestingTaskCPP>")
+
+    add_custom_command(TARGET TeshTransTestingTaskCPP POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${OpenCV_BIN_DIR}/${OpenCV_DEBUG_DLL_FILENAME}"
+        "$<TARGET_FILE_DIR:TeshTransTestingTaskCPP>")
+
+    add_custom_command(TARGET TeshTransTestingTaskCPP POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${OpenCV_BIN_DIR}/${OpenCV_RELEASE_DLL_FILENAME}"
+        "$<TARGET_FILE_DIR:TeshTransTestingTaskCPP>")
+endif()
 
 if (UNIX)
-    TARGET_LINK_LIBRARIES(YOLOv8CPP "${ONNXRUNTIME_DIR}/lib/libonnxruntime.so")
-endif(UNIX)
+    target_link_libraries(TeshTransTestingTaskCPP "${ONNXRUNTIME_DIR}/lib/libonnxruntime.so")
+endif()
