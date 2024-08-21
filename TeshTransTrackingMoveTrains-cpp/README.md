@@ -1,8 +1,15 @@
 # Запуск на С++
 ## Локальный 
 
-0. Сформировать файл [CMakeLists.txt](CMakeLists.txt)
-
+0. Подготовка
+   * Сформировать файл [CMakeLists.txt](CMakeLists.txt)
+   * Экспортировать веса Yolov8-seg.pt в onnx
+   
+      ```python
+      from ultralytics import YOLO
+      model = YOLO("yolov8n-seg.pt")  # load a custom trained model
+      model.export(format="onnx")
+      ```
 
 1. Убедитесь, что у вас установлено все необходимое:
 
