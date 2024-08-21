@@ -22,12 +22,14 @@ def main():
     parser.add_argument('mp4', type=str, help='path to file .mp4')
     parser.add_argument('pt', type=str, help='path yolov8-seg.pt')
     parser.add_argument('conf', type=str, help='conf model float 0.4')
+    parser.add_argument('b_imshow', type=str, help='off imshow(0-off/1-on)')
     args = parser.parse_args()
 
     model = YOLO(f"{args.pt}")
     conf = float(args.conf) if float(args.conf) else 0.4
-
+    b_imshow = bool(args.b_imshow)
     video_path = f"{args.mp4}"
+
     cap = cv2.VideoCapture(video_path)
 
     output_path = "result.mp4"
@@ -142,18 +144,21 @@ def main():
         combined_vertical = np.vstack(labeled_images)
         # Сохраняем результат в файл
         out.write(combined_vertical)
-
+# TODO: решить с imshow
         # Отображаем объединенное изображение
-        cv2.imshow("Combined View with Labels", combined_vertical)
+        # if b_imshow:
+        #     cv2.imshow("Combined View with Labels", combined_vertical)
 
         # Выход по нажатию клавиши 'q'
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        # if b_imshow:
+        #     if cv2.waitKey(1) & 0xFF == ord("q"):
+        #         break
 
     # Освобождение ресурсов
     cap.release()
     out.release()
-    cv2.destroyAllWindows()
+    # if b_imshow:
+    #     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()

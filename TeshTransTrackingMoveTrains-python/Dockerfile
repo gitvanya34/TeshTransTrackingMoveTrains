@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -y \
     python3-opencv \
     && apt-get clean
 
-
 # Копируем файлы проекта
 COPY requirements.txt .
 
@@ -27,4 +26,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем остальную часть проекта
 COPY . .
 # Указываем команду для запуска приложения
-CMD ["python", "main2.py", ""]
+#CMD ["python", "main2.py","traintutu.mp4","yolov8n-seg.pt", "0.4","0"]
