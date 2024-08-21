@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env
+*.git
+node_modules/
+*.md
+*.dockerignore
+Output
+Dockerfile

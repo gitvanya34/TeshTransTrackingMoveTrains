@@ -176,10 +176,10 @@ int main(int argc, char* argv[]) {
     float conf_threshold = std::stof(argv[3]);  // Преобразование строки в float
     bool b_gtx = std::stoi(argv[4]);  // Преобразование строки в int и конвертация в bool
 
-    cout<<"video_path: "<<video_path<<endl;
-    cout<<"modelPath: "<<modelPath<<endl;
-    cout<<"b_gtx: "<<b_gtx<<endl;
-    cout<<"conf_threshold: "<<conf_threshold<<endl;
+    cout << "video_path: " << video_path << endl;
+    cout << "modelPath: " << modelPath << endl;
+    cout << "b_gtx: " << b_gtx << endl;
+    cout << "conf_threshold: " << conf_threshold << endl;
 
     const std::string& onnx_provider = OnnxProviders::CUDA;
     const std::string& onnx_logid = "yolov8_inference2";
@@ -205,19 +205,19 @@ int main(int argc, char* argv[]) {
             break;
         }
 
-        processFrame(prevFrame, currentFrame, model, colors, names, conf_threshold, iou_threshold, mask_threshold, conversion_code, outputVideo, scaleFactor,b_gtx);
+        processFrame(prevFrame, currentFrame, model, colors, names, conf_threshold, iou_threshold, mask_threshold, conversion_code, outputVideo, scaleFactor, b_gtx);
 
         prevFrame = currentFrame.clone();
 
-//        if (b_gtx && cv::waitKey(1) == 'q') {
-//            break;
-//        }
+        if (b_gtx && cv::waitKey(1) == 'q') {
+            break;
+        }
     }
 
     cap.release();
     outputVideo.release();
     if (b_gtx) {
-            cv::destroyAllWindows();
-     }
+        cv::destroyAllWindows();
+    }
     return 0;
 }
