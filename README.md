@@ -66,17 +66,11 @@ python script.py input_video.mp4 yolov8-seg.pt 0.4 1
 ```
 ### Demo
 
-Примеры работы
-Видео 1: Пример обработки на Python
-<video controls width="640">
-  <source src="results/traintutu-python-yolo00.mp4" type="video/mp4">
-  Ваш браузер не поддерживает элемент <code>video</code>.
-</video>
-Видео 2: Пример обработки на C++
-<video controls width="640">
-  <source src="results/traintutu-cpp-yolo00.mp4" type="video/mp4">
-  Ваш браузер не поддерживает элемент <code>video</code>.
-</video>
+<p>
+ <img src="https://github.com/user-attachments/assets/9b1aba4a-d539-4a5c-ac5e-96472dbd8791" width="40%" alt="image">
+ <img src="https://github.com/user-attachments/assets/3b3f199d-3ee3-4ece-86a5-ca7111879f81" width="40%" alt="image">
+</p> 
+
 
 ## Как это работает
 
@@ -101,5 +95,5 @@ python script.py input_video.mp4 yolov8-seg.pt 0.4 1
 5. **Отображение и сохранение**:
    - При необходимости отображает объединенное изображение аннотированных кадров и визуализаций.
    - Сохраняет результат в файл `result.mp4`.
-  
+
 
